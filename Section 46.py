@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton, QComboBox, QMainWindow
+from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget
 import sys
 from PyQt6.QtGui import QAction
 
@@ -19,7 +19,12 @@ class MainWindow(QMainWindow):
         sub_menu_about = QAction("About SMS", self)
         help_menu.addAction(sub_menu_about)
 
+        ## Add Table for Data to Load into
+        self.table = QTableWidget()
+        self.table.setColumnCount(4)  ## Sets columns to 4
+        self.table.setHorizontalHeaderLabels(("ID", "NAME", "SUBJECT", "MOBILE"))
 
+        self.setCentralWidget(self.table)  ## Makes the table widget the main widget
 
 
 
