@@ -126,3 +126,18 @@ mobile.text()
 cursor.close()
 connection.close()
 sms.load_data()
+
+
+QtCore import QT
+
+query
+connection
+cursor
+execute(WHERE name = ?, (name,))
+store = list(result)
+
+sms.table.findItems(name, QT.mathflag.matchfixedstring
+for resutl in results
+    .table.result(.row(), 1), setSelected(True)
+
+.close

@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout
 import sys
 from PyQt6.QtGui import QAction
+from PyQt6.QtCore import Qt
 import sqlite3
 
 
@@ -138,7 +139,21 @@ class SearchStudentPopup(QDialog):
         self.setLayout(layout)
 
     def search_student(self):
-        pass
+        query = self.search_field.text()  ## Save query
+
+        connection = sqlite3.connect("Files/database.db")
+        cursor = connection.cursor()
+
+        sql_result = cursor.execute("SELECT * FROM students WHERE name = ?", (query,))  ## Look for query in SQL
+
+        search_result = list(sql_result)  ## Covnert SQL to list of tuples
+
+        table_result = sms.table.findItems(query, Qt.MatchFlag.MatchFixedString)  ## search for list in table
+        for result in table_result:
+            sms.table.item(result.row(),1).setSelected(True)  ## for each matched item take the row and highlight/select the first column (name column))
+
+        cursor.close()
+        connection.close()
 
 
 
