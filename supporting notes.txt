@@ -1,0 +1,46 @@
+draft a project requirement document by putting yourself in the shoes of the user and noting down features they need.
+
+then using the project requirement document, draw a prototype
+
+PyQt6.QtWidget QApplication, Qlabel, QWidget, QGridLayout, QlineEdit, QPushButton
+
+child class of QWidget
+
+init
+qgrid
+Qlabel name
+QlineEdit name
+Qlabel dob
+QlineEdit dob
+grid.addwidget labebl, 0,0
+grid.addwidget lineedit, 0,1
+grid.addwidget labebl, 1,0
+grid.addwidget lineeidt, 1,1
+
+app
+import sys
+QApplication(sys.argv)
+app.show
+sys.exit(QApplication.exec())
+
+super().__init__()     This is used when you want add original method to the new method instead of overwriting the old with new method
+
+self.setLayout(grid)
+
+QPushButton()
+output QLabel
+grid.addwidget button, 2,0, 1, 2    The extra 1 and 2 means span across 1 row and 2 columns
+
+grid.addwidget output, 3,0, 1, 2
+
+button.clicked.connect(self.calculate property)
+
+def calculate property
+import datetime
+datetime.now.year
+self.QlineEdit dob.text()
+self.output QLabel
+self.QlineEdit name
+year of birth .strptime(dob, %m/%d/%y).date().year
+
+self.setWindowTitle
