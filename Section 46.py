@@ -17,6 +17,7 @@ class MainWindow(QMainWindow):
         ## Add Top Menu
         file_menu = self.menuBar().addMenu("&File")
         help_menu = self.menuBar().addMenu("&Help")
+        edit_menu = self.menuBar().addMenu("&Edit")
 
         sub_menu_add = QAction("Add Student", self)
         file_menu.addAction(sub_menu_add)
@@ -24,6 +25,10 @@ class MainWindow(QMainWindow):
 
         sub_menu_about = QAction("About SMS", self)
         help_menu.addAction(sub_menu_about)
+
+        sub_menu_edit = QAction("Search", self)
+        edit_menu.addAction(sub_menu_edit)
+        sub_menu_edit.triggered.connect(self.search_student)  ## This calls the function when clicked
 
         ## Add Table for Data to Load into
         self.table = QTableWidget()
@@ -52,6 +57,9 @@ class MainWindow(QMainWindow):
 
     def add_student(self):
         AddStudenttPopup().exec()  ## this calls the class to open a pop up dialog box
+
+    def search_student(self):
+        SearchStudentPopup().exec()
 
 
 ## Create a pop up window for adding a student
@@ -105,6 +113,32 @@ class AddStudenttPopup(QDialog):
         connection.close()
 
         sms.load_data()
+
+
+## Search Student Popup
+class SearchStudentPopup(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Student Search")
+        self.setFixedHeight(300)
+        self.setFixedWidth(300)
+
+        layout = QVBoxLayout()
+
+        ## Search field
+        self.search_field = QLineEdit()
+        self.search_field.setPlaceholderText("Enter Name to Search")
+        layout.addWidget(self.search_field)
+
+        ## Button
+        self.button = QPushButton("Search")
+        layout.addWidget(self.button)
+        self.button.clicked.connect(self.search_student)
+
+        self.setLayout(layout)
+
+    def search_student(self):
+        pass
 
 
 
