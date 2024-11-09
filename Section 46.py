@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog
+from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout
 import sys
 from PyQt6.QtGui import QAction
 import sqlite3
@@ -61,6 +61,36 @@ class AddStudenttPopup(QDialog):
         self.setWindowTitle("Add Student Details")
         self.setFixedHeight(300)
         self.setFixedWidth(300)
+
+        ## Instantiate the Layout
+        layout = QVBoxLayout()
+
+        ## Name field
+        name_edit = QLineEdit()
+        name_edit.setPlaceholderText("Enter The Students Name")
+        layout.addWidget(name_edit)
+
+        ## Subject Field
+        courses = ["Math","Astronomy","Physics","Biology"]
+        subject = QComboBox()
+        subject.addItems(courses)
+        layout.addWidget(subject)
+
+        ## Mobile Field
+        mobile_edit = QLineEdit()
+        mobile_edit.setPlaceholderText("Enter The Students Mobile")
+        layout.addWidget(mobile_edit)
+
+        ## Button Field
+        button = QPushButton("Register")
+        layout.addWidget(button)
+        button.clicked.connect(self.register)
+
+        self.setLayout(layout)
+
+    def register(self):
+        pass
+
 
 
 
