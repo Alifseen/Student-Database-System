@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar
+from PyQt6.QtWidgets import QApplication, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar, QStatusBar
 import sys
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtCore import Qt
@@ -47,6 +47,12 @@ class MainWindow(QMainWindow):
         toolbar.addAction(sub_menu_add)
         toolbar.addAction(sub_menu_search)
 
+        ## Add Status Bar at the bottom that only shows buttons when cell is selected
+        self.status_bar = QStatusBar()
+        self.setStatusBar(self.status_bar)
+
+        self.table.cellClicked.connect(self.show_buttons)  ## Show buttons when cell is clicked
+
 
     ## Load SQL Data into the Table
     def load_data(self):
@@ -69,6 +75,31 @@ class MainWindow(QMainWindow):
 
     def search_student(self):
         SearchStudentPopup().exec()
+
+    def edit_cell(self):
+        EditCellPopup().exec()
+
+    def delete_cell(self):
+        DeleteCellPopup().exec()
+
+    def show_buttons(self):
+        ## Create an edit button
+        edit_button = QPushButton("Edit Cell")
+        edit_button.clicked.connect(self.edit_cell)
+
+        ## Create a delete button
+        delete_button = QPushButton("Delete Cell")
+        delete_button.clicked.connect(self.delete_cell)
+
+        ## If buttons exists, remove them so there are no duplicates
+        button_status = self.findChildren(QPushButton)  ## Checks if QpushButton is already in the method
+        if button_status:
+            for button in button_status:
+                self.status_bar.removeWidget(button)
+
+        ## Add Buttons
+        self.status_bar.addWidget(edit_button)
+        self.status_bar.addWidget(delete_button)
 
 
 ## Create a pop up window for adding a student
@@ -162,6 +193,16 @@ class SearchStudentPopup(QDialog):
 
         cursor.close()
         connection.close()
+
+
+## Dialog box that edits cell
+class EditCellPopup:
+    pass
+
+
+## Dialog box that deletes cell
+class DeleteCellPopup:
+    pass
 
 
 
