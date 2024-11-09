@@ -141,3 +141,39 @@ for resutl in results
     .table.result(.row(), 1), setSelected(True)
 
 .close
+
+
+
+
+
+QToolBar
+setMobvable(True)
+.addToolBar
+.addAction()
+
+QIcon
+
+setMinimumSize
+
+
+
+QStatusBar
+
+.setStatusBar
+
+
+.table.cellClicked.connect(show buttons)
+
+edit button
+editbutton connect edit dialoq
+.addWidget
+
+
+delete button
+deletebutton connect delete dialoq
+.addWidget
+
+.findChildren(QpushButton)
+if children
+    for child in children
+        .removeWidget(child)

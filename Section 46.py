@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar
 import sys
-from PyQt6.QtGui import QAction
+from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtCore import Qt
 import sqlite3
 
@@ -20,16 +20,16 @@ class MainWindow(QMainWindow):
         help_menu = self.menuBar().addMenu("&Help")
         edit_menu = self.menuBar().addMenu("&Edit")
 
-        sub_menu_add = QAction("Add Student", self)
+        sub_menu_add = QAction(QIcon("Files/icons/add.png"), "Add Student", self)
         file_menu.addAction(sub_menu_add)
         sub_menu_add.triggered.connect(self.add_student)  ## This calls the function when clicked
 
         sub_menu_about = QAction("About SMS", self)
         help_menu.addAction(sub_menu_about)
 
-        sub_menu_edit = QAction("Search", self)
-        edit_menu.addAction(sub_menu_edit)
-        sub_menu_edit.triggered.connect(self.search_student)  ## This calls the function when clicked
+        sub_menu_search = QAction(QIcon("Files/icons/search.png"), "Search", self)
+        edit_menu.addAction(sub_menu_search)
+        sub_menu_search.triggered.connect(self.search_student)  ## This calls the function when clicked
 
         ## Add Table for Data to Load into
         self.table = QTableWidget()
@@ -39,6 +39,15 @@ class MainWindow(QMainWindow):
         self.table.verticalHeader().setVisible(False)  ## Removes the row number display
 
         self.setCentralWidget(self.table)  ## Makes the table widget the main widget
+
+        ## Add Toolbar
+        toolbar = QToolBar()
+        toolbar.setMovable(True)
+        self.addToolBar(toolbar)
+
+        toolbar.addAction(sub_menu_add)
+        toolbar.addAction(sub_menu_search)
+
 
     ## Load SQL Data into the Table
     def load_data(self):
