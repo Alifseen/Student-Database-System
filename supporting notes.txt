@@ -95,7 +95,7 @@ def insert
 Class InsertDialog(QDialog)
 setWindowTitle
 fixedwidht
-fixedHeight
+fixedWidth
 
 QVBOxLayout
 

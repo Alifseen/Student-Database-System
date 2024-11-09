@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem
+from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog
 import sys
 from PyQt6.QtGui import QAction
 import sqlite3
@@ -10,12 +10,17 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Student Management System")
 
+        ## default size of the window
+        self.setFixedHeight(600)
+        self.setFixedWidth(600)
+
         ## Add Top Menu
         file_menu = self.menuBar().addMenu("&File")
         help_menu = self.menuBar().addMenu("&Help")
 
         sub_menu_add = QAction("Add Student", self)
         file_menu.addAction(sub_menu_add)
+        sub_menu_add.triggered.connect(self.add_student)  ## This calls the function when clicked
 
         sub_menu_about = QAction("About SMS", self)
         help_menu.addAction(sub_menu_about)
@@ -45,6 +50,17 @@ class MainWindow(QMainWindow):
 
         connection.close()
 
+    def add_student(self):
+        AddStudenttPopup().exec()  ## this calls the class to open a pop up dialog box
+
+
+## Create a pop up window for adding a student
+class AddStudenttPopup(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Add Student Details")
+        self.setFixedHeight(300)
+        self.setFixedWidth(300)
 
 
 
