@@ -2,6 +2,10 @@ draft a project requirement document by putting yourself in the shoes of the use
 
 then using the project requirement document, draw a prototype
 
+
+
+Building an Age Calculator
+
 PyQt6.QtWidget QApplication, Qlabel, QWidget, QGridLayout, QlineEdit, QPushButton
 
 child class of QWidget
@@ -44,3 +48,81 @@ self.QlineEdit name
 year of birth .strptime(dob, %m/%d/%y).date().year
 
 self.setWindowTitle
+
+
+
+
+Building a Student Management System
+
+QMainWindow   Allows adding bars (Menu, Tool, Status)
+
+self.menuBar.addMenu("&item")
+
+PyQT6.QtGui import QAction
+QAction("submenue", self)
+menu item.addAction(QAction("submenue"))
+
+
+QTableWidget
+setColumn(no.of column)
+setHorizontalHeaderLabels((headers))
+
+setCentralWidget(table)
+
+loaddata method
+slef.table
+
+import sqlite3
+.connect(db)
+.execute(SELECT FROM students)
+
+setRowCount(0)  makes sure to overwrite the table instead of adding to it. Its like setting the cursor to start in TXT files.
+
+for row no, row data in enumerate SQL Data:
+    insertRow(row no)
+    for col no, cell data in enumerate row data:
+        setItem(row no, col no, QTableWidgetItem(str(data))
+
+setVerticalHeader().setVisible(False)
+
+
+.triggered.connect(insert)
+
+def insert
+    InsertDialog()
+    exec()
+
+Class InsertDialog(QDialog)
+setWindowTitle
+fixedwidht
+fixedHeight
+
+QVBOxLayout
+
+QLineEdit name
+setPlaceHolderText
+addWidget
+
+QComboBox list of courses Bio Math physics chem
+
+mobile
+
+button
+connect(add student)
+
+setLayout
+
+
+def add student
+connect(db)
+.cursor()
+.execute(INSERT INTO, (name course, mobile))
+
+name.text()
+course.itemText(course.currentIndex())
+mobile.text()
+
+.commit
+cursor.close()
+connection.close()
+sms.load_data()
