@@ -66,20 +66,20 @@ class AddStudenttPopup(QDialog):
         layout = QVBoxLayout()
 
         ## Name field
-        name_edit = QLineEdit()
-        name_edit.setPlaceholderText("Enter The Students Name")
-        layout.addWidget(name_edit)
+        self.name_edit = QLineEdit()
+        self.name_edit.setPlaceholderText("Enter The Students Name")
+        layout.addWidget(self.name_edit)
 
         ## Subject Field
         courses = ["Math","Astronomy","Physics","Biology"]
-        subject = QComboBox()
-        subject.addItems(courses)
-        layout.addWidget(subject)
+        self.subject_select = QComboBox()
+        self.subject_select.addItems(courses)
+        layout.addWidget(self.subject_select)
 
         ## Mobile Field
-        mobile_edit = QLineEdit()
-        mobile_edit.setPlaceholderText("Enter The Students Mobile")
-        layout.addWidget(mobile_edit)
+        self.mobile_edit = QLineEdit()
+        self.mobile_edit.setPlaceholderText("Enter The Students Mobile")
+        layout.addWidget(self.mobile_edit)
 
         ## Button Field
         button = QPushButton("Register")
@@ -89,8 +89,22 @@ class AddStudenttPopup(QDialog):
         self.setLayout(layout)
 
     def register(self):
-        pass
+        ## Get data from instance variables
+        name = self.name_edit.text()
+        subject = self.subject_select.itemText(self.subject_select.currentIndex())
+        mobile = self.mobile_edit.text()
 
+        ## Connect and Insert the values into SQL
+        connection = sqlite3.connect("Files/database.db")
+        cursor = connection.cursor()
+
+        cursor.execute("INSERT INTO students (name, course, mobile) VALUES (?,?,?)", (name, subject, mobile))
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        sms.load_data()
 
 
 
