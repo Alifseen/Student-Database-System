@@ -12,8 +12,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Student Management System")
 
         ## default size of the window
-        self.setFixedHeight(600)
-        self.setFixedWidth(600)
+        self.setMinimumSize(800,600)
 
         ## Add Top Menu
         file_menu = self.menuBar().addMenu("&File")
