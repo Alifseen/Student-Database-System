@@ -10,8 +10,8 @@ class SQLConnection:
         self.database_file = database_file
 
     def connect(self):
-        connect = sqlite3.connect(self.database_file)
-        return connect
+        connection = sqlite3.connect(self.database_file)
+        return connection
 
 
 ## Add a Main Window
@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
     ## Load SQL Data into the Table
     def load_data(self):
         ## Load DB and get data
-        connection = SQLConnection.connect()
+        connection = SQLConnection().connect()
         cursor = connection.cursor()
         data = cursor.execute("SELECT * FROM students")
 

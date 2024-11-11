@@ -3,14 +3,20 @@ import sys
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtCore import Qt
 import sqlite3
+import pymysql
 
 
 class SQLConnection:
-    def __init__(self, database_file="Files/database.db"):
-        self.database_file = database_file
+    ## initialize the variables. host is the ip address, in our case its our pc.
+    def __init__(self, host="Localhost", user="root", passw="47722774", db="school"):
+        self.host = host
+        self.user = user
+        self.passw = passw
+        self.db = db
 
     def connect(self):
-        connect = sqlite3.connect(self.database_file)
+        ## change the connector
+        connect = pymysql.connect(host=self.host, user=self.user, password =self. passw, database=self.db)
         return connect
 
 
@@ -67,9 +73,11 @@ class MainWindow(QMainWindow):
     ## Load SQL Data into the Table
     def load_data(self):
         ## Load DB and get data
-        connection = SQLConnection.connect()
+        connection = SQLConnection().connect()
         cursor = connection.cursor()
-        data = cursor.execute("SELECT * FROM students")
+        cursor.execute("SELECT * FROM students")
+        data = cursor.fetchall()
+
 
         self.table.setRowCount(0)  ## This makes sure tha data is loaded in the table from row 1 column 1, not whereever the last entry was from.
 
@@ -157,10 +165,11 @@ class AddStudenttPopup(QDialog):
         mobile = self.mobile_edit.text()
 
         ## Connect and Insert the values into SQL
-        connection = SQLConnection.connect()
+        connection = SQLConnection().connect()
         cursor = connection.cursor()
 
-        cursor.execute("INSERT INTO students (name, course, mobile) VALUES (?,?,?)", (name, subject, mobile))
+        ## Change the placeholder everywhere from ? to %s
+        cursor.execute("INSERT INTO students (name, course, mobile) VALUES (%s,%s,%s)", (name, subject, mobile))
         connection.commit()
 
         cursor.close()
@@ -194,10 +203,11 @@ class SearchStudentPopup(QDialog):
     def search_student(self):
         query = self.search_field.text()  ## Save query
 
-        connection = SQLConnection.connect()
+        connection = SQLConnection().connect()
         cursor = connection.cursor()
 
-        sql_result = cursor.execute("SELECT * FROM students WHERE name = ?", (query,))  ## Look for query in SQL
+        cursor.execute("SELECT * FROM students WHERE name = %s", (query,))  ## Look for query in SQL
+        sql_result = cursor.fetchall()
 
         search_result = list(sql_result)  ## Covnert SQL to list of tuples
 
@@ -257,10 +267,10 @@ class EditCellPopup(QDialog):
         student_id = sms.table.item(self.row,0).text()
 
         ## Connect with and edit SQL DB
-        connection = SQLConnection.connect()
+        connection = SQLConnection().connect()
         cursor = connection.cursor()
 
-        cursor.execute("UPDATE students SET name = ?, course = ?, mobile = ? WHERE id = ?", (updated_name, updated_subject, updated_mobile, student_id))
+        cursor.execute("UPDATE students SET name = %s, course = %s, mobile = %s WHERE id = %s", (updated_name, updated_subject, updated_mobile, student_id))
 
         ## Close and Finalize
         connection.commit()
@@ -281,7 +291,7 @@ class DeleteCellPopup(QDialog):
         ## Create a confirmation prompt
         layout = QGridLayout()
 
-        sure = QLabel("Are you sure you want to Delete the Data?")
+        sure = QLabel("Are you sure you want to Delete the Data%s")
         no = QPushButton("No")
         yes = QPushButton("Yes")
 
@@ -298,10 +308,10 @@ class DeleteCellPopup(QDialog):
         row = sms.table.currentRow()
         student_id = sms.table.item(row, 0).text()
 
-        connection = SQLConnection.connect()
+        connection = SQLConnection().connect()
         cursor = connection.cursor()
 
-        cursor.execute("DELETE FROM students WHERE id = ?", (student_id, ))
+        cursor.execute("DELETE FROM students WHERE id = %s", (student_id, ))
 
         connection.commit()
         cursor.close()

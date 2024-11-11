@@ -227,3 +227,13 @@ INSERT INTO table name (col names, ...) VALUES (values)
 mysql> INSERT INTO students (name, course, mobile)
     -> VALUES
     -> ("ASD", "Math", "123");
+
+
+to use mysql with python use: "pip install pymysql
+"
+
+mysql.connector.connect(host=Localhost, user=root, pass="47722774", db="school")
+
+placeholder in mysql is "%s" not "?"
+
+Always create cursor in mysql, even when reading data as well as cursor.fethcall()
