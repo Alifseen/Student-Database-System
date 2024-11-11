@@ -199,3 +199,7 @@ update_student pass
 Qmessagebox
 
 UPDATE SET WHERE id, ()
+
+
+Refactoring is improving the structure of the code without changing the functionality
+This can involve duplciate codes, long methods, unclear names of methods and variables, lack of comments, inefficient algorithms
