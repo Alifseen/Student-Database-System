@@ -25,6 +25,7 @@ class MainWindow(QMainWindow):
 
         sub_menu_about = QAction("About SMS", self)
         help_menu.addAction(sub_menu_about)
+        sub_menu_about.triggered.connect(self.about)  ## This calls the function when clicked
 
         sub_menu_search = QAction(QIcon("Files/icons/search.png"), "Search", self)
         edit_menu.addAction(sub_menu_search)
@@ -100,6 +101,10 @@ class MainWindow(QMainWindow):
         ## Add Buttons
         self.status_bar.addWidget(edit_button)
         self.status_bar.addWidget(delete_button)
+
+    ## Display "About" window
+    def about(self):
+        AboutPopup().exec()
 
 
 ## Create a pop up window for adding a student
@@ -307,6 +312,19 @@ class DeleteCellPopup(QDialog):
         msg_box.setText("Deleted Successfully")
         msg_box.exec()
 
+
+## Message Box that shows info about the program
+class AboutPopup(QMessageBox):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("About SMS (Student Management System)")
+
+        content = """\
+        This Program Lets you enter, edit, store and delete student information such as names, subjects and phone numbers.
+        Feel free to modify or re-use it as you see fit. 
+        """
+
+        self.setText(content)
 
 
 app = QApplication(sys.argv)
