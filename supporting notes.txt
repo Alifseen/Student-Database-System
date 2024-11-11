@@ -177,3 +177,25 @@ deletebutton connect delete dialoq
 if children
     for child in children
         .removeWidget(child)
+
+
+
+
+.table.currentRow()
+.table.item(row,1).text
+this value in Qlineedit
+
+update_student pass
+
+.table.item(row,2).text
+.setCurrentText
+
+.table.item(row,3).text
+
+.table.item(row,0).text
+
+
+
+Qmessagebox
+
+UPDATE SET WHERE id, ()

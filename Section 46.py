@@ -196,12 +196,51 @@ class SearchStudentPopup(QDialog):
 
 
 ## Dialog box that edits cell
-class EditCellPopup:
-    pass
+class EditCellPopup(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Update Student Details")
+        self.setFixedHeight(300)
+        self.setFixedWidth(300)
+
+        layout = QVBoxLayout()
+
+        ## Get the Name from the field and place it
+        self.row = sms.table.currentRow()
+        name = sms.table.item(self.row, 1).text()
+
+        self.name_edit = QLineEdit(name)
+        self.name_edit.setPlaceholderText("Enter The Students Name")
+        layout.addWidget(self.name_edit)
+
+        ## Get the Subject from the box and place it
+        subject = sms.table.item(self.row, 2).text()
+
+        courses = ["Math","Astronomy","Physics","Biology"]
+        self.subject_select = QComboBox()
+        self.subject_select.addItems(courses)
+        self.subject_select.setCurrentText(subject)
+        layout.addWidget(self.subject_select)
+
+        ## Get the Mobile from the box and place it
+        mobile = sms.table.item(self.row, 3).text()
+
+        self.mobile_edit = QLineEdit(mobile)
+        self.mobile_edit.setPlaceholderText("Enter The Students Mobile")
+        layout.addWidget(self.mobile_edit)
+
+        button = QPushButton("Register")
+        layout.addWidget(button)
+        button.clicked.connect(self.update)
+
+        self.setLayout(layout)
+
+    def update(self):
+        pass
 
 
 ## Dialog box that deletes cell
-class DeleteCellPopup:
+class DeleteCellPopup(QDialog):
     pass
 
 
