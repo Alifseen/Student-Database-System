@@ -236,7 +236,25 @@ class EditCellPopup(QDialog):
         self.setLayout(layout)
 
     def update(self):
-        pass
+        ## Get the values
+        updated_name = self.name_edit.text()
+        updated_subject = self.subject_select.itemText(self.subject_select.currentIndex())
+        updated_mobile = self.mobile_edit.text()
+        student_id = sms.table.item(self.row,0).text()
+
+        ## Connect with and edit SQL DB
+        connection = sqlite3.connect("Files/database.db")
+        cursor = connection.cursor()
+
+        cursor.execute("UPDATE students SET name = ?, course = ?, mobile = ? WHERE id = ?", (updated_name, updated_subject, updated_mobile, student_id))
+
+        ## Close and Finalize
+        connection.commit()
+        cursor.close()
+        connection.close()
+        sms.load_data()
+
+        self.close()
 
 
 ## Dialog box that deletes cell
