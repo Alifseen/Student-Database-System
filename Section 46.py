@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar, QStatusBar
+from PyQt6.QtWidgets import QApplication, QLineEdit, QPushButton, QComboBox, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar, QStatusBar, QMessageBox, QGridLayout, QLabel
 import sys
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtCore import Qt
@@ -259,7 +259,53 @@ class EditCellPopup(QDialog):
 
 ## Dialog box that deletes cell
 class DeleteCellPopup(QDialog):
-    pass
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Delete Student Details")
+
+
+        ## Create a confirmation prompt
+        layout = QGridLayout()
+
+        sure = QLabel("Are you sure you want to Delete the Data?")
+        no = QPushButton("No")
+        yes = QPushButton("Yes")
+
+        layout.addWidget(sure, 0,0,1,2)
+        layout.addWidget(yes, 1,0)
+        layout.addWidget(no, 1,1)
+
+        ## Delete if user clicked yes
+        yes.clicked.connect(self.delete)
+
+        self.setLayout(layout)
+
+    def delete(self):
+        row = sms.table.currentRow()
+        student_id = sms.table.item(row, 0).text()
+
+        connection = sqlite3.connect("Files/database.db")
+        cursor = connection.cursor()
+
+        cursor.execute("DELETE FROM students WHERE id = ?", (student_id, ))
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+        sms.load_data()
+
+        ## Close the confirmation prompt
+        self.close()
+
+        ## Show a message box once deleted
+        self.confirmation_msg()
+
+    ## Show a message box
+    def confirmation_msg(self):
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Success")
+        msg_box.setText("Deleted Successfully")
+        msg_box.exec()
 
 
 
