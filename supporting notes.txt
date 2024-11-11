@@ -203,3 +203,27 @@ UPDATE SET WHERE id, ()
 
 Refactoring is improving the structure of the code without changing the functionality
 This can involve duplciate codes, long methods, unclear names of methods and variables, lack of comments, inefficient algorithms
+
+
+SQLite vs MySQL
+
+MySQL = Better concurrency, better for bigger Data, more datatypes, in built authentication, multiple DB users.
+
+SQLLite = easy to setup, good for development, easily portable with .db files.
+
+after installing mysql, you can check it with powershell cli: mysql -u root -p
+If you get an error, you need to add mysql to system path. Go to systemt environment variables, edit path variable, and add a new variable and paste the path to mysql bin folder.
+if done successfully, you will be prompted to write the password for root user of mysql created during installation
+
+CLI commands:
+SHOW DATABASES;
+CREATE DATABASE name;
+CREATE TABLE name(col name and type (INT,VARCHAR(255) etc) and key type (primary etc), ...
+USE database name:
+SHOW TABLE name
+SELECT * FROM table name
+INSERT INTO table name (col names, ...) VALUES (values)
+
+mysql> INSERT INTO students (name, course, mobile)
+    -> VALUES
+    -> ("ASD", "Math", "123");
