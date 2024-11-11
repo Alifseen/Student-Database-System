@@ -5,6 +5,15 @@ from PyQt6.QtCore import Qt
 import sqlite3
 
 
+class SQLConnection:
+    def __init__(self, database_file="Files/database.db"):
+        self.database_file = database_file
+
+    def connect(self):
+        connect = sqlite3.connect(self.database_file)
+        return connect
+
+
 ## Add a Main Window
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -58,7 +67,7 @@ class MainWindow(QMainWindow):
     ## Load SQL Data into the Table
     def load_data(self):
         ## Load DB and get data
-        connection = sqlite3.connect("Files/database.db")
+        connection = SQLConnection.connect()
         cursor = connection.cursor()
         data = cursor.execute("SELECT * FROM students")
 
@@ -148,7 +157,7 @@ class AddStudenttPopup(QDialog):
         mobile = self.mobile_edit.text()
 
         ## Connect and Insert the values into SQL
-        connection = sqlite3.connect("Files/database.db")
+        connection = SQLConnection.connect()
         cursor = connection.cursor()
 
         cursor.execute("INSERT INTO students (name, course, mobile) VALUES (?,?,?)", (name, subject, mobile))
@@ -185,7 +194,7 @@ class SearchStudentPopup(QDialog):
     def search_student(self):
         query = self.search_field.text()  ## Save query
 
-        connection = sqlite3.connect("Files/database.db")
+        connection = SQLConnection.connect()
         cursor = connection.cursor()
 
         sql_result = cursor.execute("SELECT * FROM students WHERE name = ?", (query,))  ## Look for query in SQL
@@ -248,7 +257,7 @@ class EditCellPopup(QDialog):
         student_id = sms.table.item(self.row,0).text()
 
         ## Connect with and edit SQL DB
-        connection = sqlite3.connect("Files/database.db")
+        connection = SQLConnection.connect()
         cursor = connection.cursor()
 
         cursor.execute("UPDATE students SET name = ?, course = ?, mobile = ? WHERE id = ?", (updated_name, updated_subject, updated_mobile, student_id))
@@ -289,7 +298,7 @@ class DeleteCellPopup(QDialog):
         row = sms.table.currentRow()
         student_id = sms.table.item(row, 0).text()
 
-        connection = sqlite3.connect("Files/database.db")
+        connection = SQLConnection.connect()
         cursor = connection.cursor()
 
         cursor.execute("DELETE FROM students WHERE id = ?", (student_id, ))
