@@ -1,1 +1,0 @@
-# This is an SQL Database of students
